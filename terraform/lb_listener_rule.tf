@@ -1,6 +1,6 @@
 resource "aws_lb_listener_rule" "default_lb_listener_rule" {
   listener_arn = data.aws_lb_listener.lb_listener.arn
-  priority     = 99
+  priority     = 94
 
   action {
     type             = "forward"
@@ -8,7 +8,7 @@ resource "aws_lb_listener_rule" "default_lb_listener_rule" {
   }
   condition {
     path_pattern {
-      values = ["/*"]
+      values = ["/flagsmith/*"]
     }
   }
   condition {
