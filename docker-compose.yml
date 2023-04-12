@@ -35,6 +35,7 @@ services:
       # To use task processor service, uncomment line below and additional 'flagsmith_processor'
       # container below
       TASK_RUN_METHOD: TASK_PROCESSOR # other options are: SYNCHRONOUSLY, SEPARATE_THREAD (default)
+      # STATIC_ASSET_CDN_URL: Used for replacing local static paths
 
       # For more info on configuring E-Mails - https://docs.flagsmith.com/deployment/locally-api#environment-variables
       #
