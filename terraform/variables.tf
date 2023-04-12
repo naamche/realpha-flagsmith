@@ -60,7 +60,7 @@ variable "codedeploy_deployment_group_name" {
 
 variable "parameter_store_path_name" {
   type    = string
-  default = "/flagsmith/"
+  default = "/rlph/flagsmith/"
 }
 
 variable "ecs_execution_role_policy_name" {
@@ -136,9 +136,5 @@ variable "codedeploy_config_bucket_name" {
 }
 
 variable "lb_name" {
-  type = string
-}
-
-variable "route53_zone_name" {
   type = string
 }

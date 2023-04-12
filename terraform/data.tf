@@ -25,10 +25,6 @@ data "aws_subnets" "private_subnets" {
   }
 }
 
-data "aws_route53_zone" "route53_zone" {
-  name = var.route53_zone_name
-}
-
 data "aws_ssm_parameters_by_path" "postgres_ssm_parameters" {
   path = "${var.parameter_store_path_name}postgres"
 }

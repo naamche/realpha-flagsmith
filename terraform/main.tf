@@ -1,6 +1,6 @@
 terraform {
   backend "s3" {
-    profile = "turnit-production"
+    profile = "realpha-staging"
   }
   required_providers {
     aws = {
@@ -14,9 +14,9 @@ provider "aws" {
   region = "us-east-2"
   default_tags {
     tags = {
-      "Owner" : "Turnit"
+      "Owner" : "ReAlpha"
       "Manager" : "Terraform"
     }
   }
-  profile = "turnit-production"
+  profile = "realpha-staging"
 }
