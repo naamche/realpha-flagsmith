@@ -1,6 +1,5 @@
 terraform {
   backend "s3" {
-    profile = "realpha-staging"
   }
   required_providers {
     aws = {
@@ -18,5 +17,4 @@ provider "aws" {
       "Manager" : "Terraform"
     }
   }
-  profile = "realpha-staging"
 }

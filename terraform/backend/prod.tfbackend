@@ -1,3 +1,3 @@
-bucket  = "turnit-terraform-state-production"
+bucket  = "rlph-iac-terraform-state-prod"
 key     = "flagsmith/terraform.tfstate"
 region  = "us-east-2"

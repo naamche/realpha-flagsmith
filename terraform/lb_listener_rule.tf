@@ -8,7 +8,7 @@ resource "aws_lb_listener_rule" "default_lb_listener_rule" {
   }
   condition {
     path_pattern {
-      values = ["/flagsmith/*"]
+      values = ["/*"]
     }
   }
   condition {
