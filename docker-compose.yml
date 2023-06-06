@@ -47,6 +47,8 @@ services:
       # EMAIL_HOST_PASSWORD: smtp_account_password
       # EMAIL_PORT: 587 # optional
       # EMAIL_USE_TLS: True # optional
+    env_file:
+      - dev.env
 
     ports:
       - "8000:8000"
