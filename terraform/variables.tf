@@ -95,27 +95,27 @@ variable "ec2_security_group_name" {
 }
 
 variable "ec2_instance_role_name" {
-  type = string
+  type    = string
   default = "flagsmith-ec2-instance-role"
 }
 
 variable "ec2_iam_instance_profile_name" {
-  type = string
+  type    = string
   default = "flagsmith-ec2-iam-instance-profile"
 }
 
 variable "codedeploy_policy_name" {
-  type = string
+  type    = string
   default = "flagsmith-codedeploy-policy"
 }
 
 variable "codedeploy_iam_role_name" {
-  type = string
+  type    = string
   default = "flagsmith-codedeploy-iam-role"
 }
 
 variable "cloudwatch_log_group_name" {
-  type = string
+  type    = string
   default = "flagsmith-cloudwatch-log-group"
 }
 
@@ -136,5 +136,9 @@ variable "codedeploy_config_bucket_name" {
 }
 
 variable "lb_name" {
+  type = string
+}
+
+variable "ecs_capacity_provider_name" {
   type = string
 }

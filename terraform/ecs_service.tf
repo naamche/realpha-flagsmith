@@ -11,7 +11,13 @@ resource "aws_ecs_service" "default_ecs_service" {
   enable_ecs_managed_tags            = true
 
   lifecycle {
-    ignore_changes = [task_definition, desired_count, load_balancer]
+    ignore_changes = [task_definition, desired_count, load_balancer, capacity_provider_strategy]
+  }
+
+  capacity_provider_strategy {
+    base              = 0
+    weight            = 1
+    capacity_provider = var.ecs_capacity_provider_name
   }
 
   load_balancer {
