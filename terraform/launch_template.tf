@@ -3,6 +3,12 @@ resource "aws_launch_template" "default_launch_template" {
   image_id      = var.ami
   instance_type = var.instance_type
 
+  metadata_options {
+    http_endpoint               = "enabled"
+    http_tokens                 = "required"
+    http_put_response_hop_limit = 1
+  }
+
   user_data = base64encode(<<EOF
 #! /bin/bash
 sudo apt-get update
