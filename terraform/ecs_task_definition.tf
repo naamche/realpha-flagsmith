@@ -18,8 +18,9 @@ resource "aws_ecs_task_definition" "default_ecs_task_definition" {
   container_definitions = jsonencode([
     {
       name : var.application_name
-      image : "flagsmith/flagsmith:latest"
-      memory : 900
+      image : "flagsmith/flagsmith:2.187"
+      cpu : 2048
+      memory : 1820
       portMappings : [
         {
           "containerPort" : var.application_port
@@ -43,32 +44,33 @@ resource "aws_ecs_task_definition" "default_ecs_task_definition" {
         }
       }
     },
-    {
-      name : "flagsmith_processor"
-      image : "flagsmith/flagsmith:latest"
-      memory : 900
-      entryPoint : ["python", "manage.py", "runprocessor", "--sleepintervalms", "500"]
-      dependsOn : [
-        {
-          "containerName" : var.application_name
-          condition : "START"
-        }
-      ]
-      secrets : concat([
-        for name in data.aws_ssm_parameters_by_path.flagsmith_processor_ssm_parameters.names :
-        {
-          name : reverse(split("/", name))[0],
-          valueFrom : "arn:aws:ssm:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:parameter${name}"
-        }
-      ], local.common_secrets)
-      logConfiguration : {
-        "logDriver" : "awslogs"
-        "options" : {
-          "awslogs-group" : var.cloudwatch_log_group_name
-          "awslogs-region" : data.aws_region.current_region.name
-          "awslogs-stream-prefix" : var.application_name
-        }
-      }
-    }
+    # {
+    #   name : "flagsmith_processor"
+    #   image : "flagsmith/flagsmith:2.185"
+    #   cpu : 1024
+    #   memory : 900
+    #   entryPoint : ["python", "manage.py", "runprocessor", "--sleepintervalms", "500"]
+    #   dependsOn : [
+    #     {
+    #       "containerName" : var.application_name
+    #       condition : "START"
+    #     }
+    #   ]
+    #   secrets : concat([
+    #     for name in data.aws_ssm_parameters_by_path.flagsmith_processor_ssm_parameters.names :
+    #     {
+    #       name : reverse(split("/", name))[0],
+    #       valueFrom : "arn:aws:ssm:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:parameter${name}"
+    #     }
+    #   ], local.common_secrets)
+    #   logConfiguration : {
+    #     "logDriver" : "awslogs"
+    #     "options" : {
+    #       "awslogs-group" : var.cloudwatch_log_group_name
+    #       "awslogs-region" : data.aws_region.current_region.name
+    #       "awslogs-stream-prefix" : var.application_name
+    #     }
+    #   }
+    # }
   ])
 }
