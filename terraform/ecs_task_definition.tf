@@ -15,6 +15,10 @@ resource "aws_ecs_task_definition" "default_ecs_task_definition" {
   network_mode             = "bridge"
   requires_compatibilities = ["EC2"]
 
+  volume {
+    name = "flagsmith_tmp_volume"
+  }
+
   container_definitions = jsonencode([
     {
       name : var.application_name
@@ -27,6 +31,12 @@ resource "aws_ecs_task_definition" "default_ecs_task_definition" {
           "containerPort" : var.application_port
           "hostPort" : var.application_port
           "protocol" : "tcp"
+        }
+      ]
+      mountPoints : [
+        {
+          containerPath : "/tmp"
+          sourceVolume : "flagsmith_tmp_volume"
         }
       ]
       secrets : concat([
