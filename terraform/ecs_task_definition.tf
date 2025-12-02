@@ -21,6 +21,7 @@ resource "aws_ecs_task_definition" "default_ecs_task_definition" {
       image : "flagsmith/flagsmith:2.187"
       cpu : 2048
       memory : 1820
+      readonlyRootFilesystem : true
       portMappings : [
         {
           "containerPort" : var.application_port
