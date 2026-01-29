@@ -23,8 +23,8 @@ resource "aws_ecs_task_definition" "default_ecs_task_definition" {
     {
       name : var.application_name
       image : "flagsmith/flagsmith:2.187"
-      cpu : 2048
-      memory : 1820
+      cpu : var.task_cpu_units
+      memory : var.task_memory_mb
       readonlyRootFilesystem : true
       portMappings : [
         {

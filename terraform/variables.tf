@@ -142,3 +142,13 @@ variable "lb_name" {
 variable "ecs_capacity_provider_name" {
   type = string
 }
+
+variable "task_cpu_units" {
+  type    = number
+  default = 2048
+}
+
+variable "task_memory_mb" {
+  type    = number
+  default = 1890
+}
