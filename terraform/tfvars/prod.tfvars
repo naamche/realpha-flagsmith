@@ -7,3 +7,7 @@ ecs_capacity_provider_name    = "flagsmith-ecs-capacity-provider-prod"
 
 task_cpu_units = 1792
 task_memory_mb = 1378
+
+database_pooler_enabled = true
+database_pooler_host    = "realpha-db-pooler-prod-nlb-7c3d476d566d6ba9.elb.us-east-2.amazonaws.com"
+database_pooler_port    = 6432

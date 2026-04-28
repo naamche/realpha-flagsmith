@@ -152,3 +152,21 @@ variable "task_memory_mb" {
   type    = number
   default = 1890
 }
+
+variable "database_pooler_enabled" {
+  description = "When true, rewrite the Flagsmith DATABASE_URL SSM parameter to use the PgBouncer pooler host and port."
+  type        = bool
+  default     = false
+}
+
+variable "database_pooler_host" {
+  description = "PgBouncer/NLB host to use in DATABASE_URL when database_pooler_enabled is true."
+  type        = string
+  default     = ""
+}
+
+variable "database_pooler_port" {
+  description = "PgBouncer/NLB port to use in DATABASE_URL when database_pooler_enabled is true."
+  type        = number
+  default     = 6432
+}
