@@ -1,6 +1,11 @@
 locals {
+  common_ssm_parameter_names = sort(distinct(concat(
+    data.aws_ssm_parameters_by_path.common_ssm_parameters.names,
+    var.enable_shared_pooler_database_url ? [aws_ssm_parameter.flagsmith_database_url[0].name] : [],
+  )))
+
   common_secrets = [
-    for name in data.aws_ssm_parameters_by_path.common_ssm_parameters.names :
+    for name in local.common_ssm_parameter_names :
     {
       name : reverse(split("/", name))[0]
       valueFrom : "arn:aws:ssm:${data.aws_region.current_region.name}:${data.aws_caller_identity.current_account.account_id}:parameter${name}"

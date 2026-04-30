@@ -63,6 +63,24 @@ variable "parameter_store_path_name" {
   default = "/rlph/flagsmith/"
 }
 
+variable "global_parameter_store_path_name" {
+  description = "Global infrastructure SSM path containing shared PrivateLink exports."
+  type        = string
+  default     = ""
+}
+
+variable "enable_shared_pooler_database_url" {
+  description = "Whether this Flagsmith stack should manage DATABASE_URL to use the shared PgBouncer listener."
+  type        = bool
+  default     = false
+}
+
+variable "postgres_pooler_port" {
+  description = "Shared PgBouncer listener port."
+  type        = number
+  default     = 6432
+}
+
 variable "ecs_execution_role_policy_name" {
   type    = string
   default = "flagsmith-ecs-execution-role-policy"
@@ -121,26 +139,56 @@ variable "cloudwatch_log_group_name" {
 
 variable "host_name" {
   type = string
+
+  validation {
+    condition     = var.host_name == "config.realpha.com"
+    error_message = "Flagsmith infrastructure is prod-only; host_name must be config.realpha.com."
+  }
 }
 
 variable "vpc_name" {
   type = string
+
+  validation {
+    condition     = var.vpc_name == "rlph-global-vpc-prod"
+    error_message = "Flagsmith infrastructure is prod-only; vpc_name must be rlph-global-vpc-prod."
+  }
 }
 
 variable "private_subnet_names" {
   type = list(string)
+
+  validation {
+    condition     = alltrue([for name in var.private_subnet_names : endswith(name, "-prod")])
+    error_message = "Flagsmith infrastructure is prod-only; private subnet names must target prod."
+  }
 }
 
 variable "codedeploy_config_bucket_name" {
   type = string
+
+  validation {
+    condition     = var.codedeploy_config_bucket_name == "rlph-global-code-deploy-config-bucket-prod"
+    error_message = "Flagsmith infrastructure is prod-only; codedeploy_config_bucket_name must target prod."
+  }
 }
 
 variable "lb_name" {
   type = string
+
+  validation {
+    condition     = var.lb_name == "rlph-global-lb-prod"
+    error_message = "Flagsmith infrastructure is prod-only; lb_name must be rlph-global-lb-prod."
+  }
 }
 
 variable "ecs_capacity_provider_name" {
   type = string
+
+  validation {
+    condition     = var.ecs_capacity_provider_name == "flagsmith-ecs-capacity-provider-prod"
+    error_message = "Flagsmith infrastructure is prod-only; ecs_capacity_provider_name must target prod."
+  }
 }
 
 variable "task_cpu_units" {
@@ -151,22 +199,4 @@ variable "task_cpu_units" {
 variable "task_memory_mb" {
   type    = number
   default = 1890
-}
-
-variable "database_pooler_enabled" {
-  description = "When true, rewrite the Flagsmith DATABASE_URL SSM parameter to use the PgBouncer pooler host and port."
-  type        = bool
-  default     = false
-}
-
-variable "database_pooler_host" {
-  description = "PgBouncer/NLB host to use in DATABASE_URL when database_pooler_enabled is true."
-  type        = string
-  default     = ""
-}
-
-variable "database_pooler_port" {
-  description = "PgBouncer/NLB port to use in DATABASE_URL when database_pooler_enabled is true."
-  type        = number
-  default     = 6432
 }
